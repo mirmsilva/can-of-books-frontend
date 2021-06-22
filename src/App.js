@@ -3,7 +3,7 @@ import Header from './Header';
 import IsLoadingAndError from './IsLoadingAndError';
 import Footer from './Footer';
 import { withAuth0 } from '@auth0/auth0-react';
-// import axios from 'axios';
+import axios from 'axios';
 
 import {
   BrowserRouter as Router,
@@ -12,8 +12,23 @@ import {
 } from "react-router-dom";
 import Login from './Login';
 import BestBooks from './BestBooks';
+import { Button } from 'react-bootstrap';
 
 class App extends React.Component {
+  makeRequest = async () => {
+    // this is going to be the same, always, for making requests to the server including the token
+    const { getIdTokenClaims } = this.props.auth0;
+    let tokenClaims = await getIdTokenClaims();
+    const jwt = tokenClaims.__raw;
+
+    const config = {
+      headers: {"Authorization" : `Bearer ${jwt}`}
+    };
+
+    const serverResponse = await axios.get('http://localhost:3001/test-login', config);
+
+    console.log(serverResponse);
+  }
 
   render() {
     console.log(this.props.auth0);
@@ -31,9 +46,11 @@ class App extends React.Component {
               <BestBooks /> 
               : 
               <Login />}
-                {/* TODO: if the user is logged in, render the `BestBooks` component, if they are not, render the `Login` component */}
               </Route >
-              <Route exact path = "/profile"> <h1>testing</h1></Route>
+              <Route exact path = "/profile"> 
+              <h1>My Profile</h1>
+              <Button onClick ={this.makeRequest}> Click Here to Auth to Server</Button>
+              </Route>
             </Switch>
             <Footer />
           </IsLoadingAndError>
