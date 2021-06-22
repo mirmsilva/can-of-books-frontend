@@ -18,7 +18,7 @@ class App extends React.Component {
   render() {
     console.log(this.props.auth0);
     //we are importing these props from Auth0
-    const { user, isAuthenticated, isLoading}= this.props.auth0;
+    const { isAuthenticated }= this.props.auth0;
     console.log('app', this.props);
     return(
       <>
