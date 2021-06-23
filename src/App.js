@@ -10,6 +10,7 @@ import {
   Switch,
   Route
 } from "react-router-dom";
+
 import Login from './Login';
 import BestBooks from './BestBooks';
 import Profile from './Profile';
@@ -26,10 +27,11 @@ class App extends React.Component {
             <Header auth = {isAuthenticated}/>
             <Switch>
               <Route exact path="/"> 
-              {isAuthenticated ? 
-              <BestBooks /> 
-              : 
-              <Login />}
+              {isAuthenticated ?
+              <BestBooks />
+                :
+                '' 
+              }
               </Route >
               <Route exact path = "/profile"> 
                 <Profile/>

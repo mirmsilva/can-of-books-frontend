@@ -4,6 +4,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import { Link } from "react-router-dom";
 import './Header.css';
 import LogoutButton from './LogoutButton';
+import Login from './Login';
 
 
 class Header extends React.Component {
@@ -19,7 +20,7 @@ class Header extends React.Component {
           <Link to="/profile">Profile</Link> 
           <LogoutButton />
           </>
-          : ''}
+          : <Login/>}
       </Navbar>
     );
   }
