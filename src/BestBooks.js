@@ -2,9 +2,11 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Carousel from 'react-bootstrap/Carousel';
 import './BestBooks.css';
+import { Button } from 'react-bootstrap';
 
 import { withAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
+import BookFormModal from './BookFormModal';
 
 class MyFavoriteBooks extends React.Component {
 
@@ -12,6 +14,7 @@ class MyFavoriteBooks extends React.Component {
     super(props);
     this.state = {
     books: [],
+    showModal:false
     }
   }
 
@@ -34,10 +37,21 @@ class MyFavoriteBooks extends React.Component {
     this.setState({books: books.data});
 
   }
-
+showModal=()=>{
+  console.log('button pressed');
+  this.setState({
+    shouldShowModal:true
+  })
+}
+hideModal=()=>{
+  this.setState({
+    shouldShowModal:false
+  })
+}
   render() {
     console.log(this.state.books);
     return(
+      <>
 <Carousel fade>
     {
       this.state.books ? this.state.books.map(book => 
@@ -55,6 +69,10 @@ class MyFavoriteBooks extends React.Component {
       : ''
     }
 </Carousel>
+<Button onClick={this.showModal}>Add Book </Button>
+{this.state.shouldShowModal ? 
+<BookFormModal hideModal={this.hideModal} /> : ''}
+</>
     )} 
 }
 
