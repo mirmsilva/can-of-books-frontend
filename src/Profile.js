@@ -20,11 +20,9 @@ class Profile extends React.Component {
     };
 
     let url = process.env.REACT_APP_BACKEND_URL;
-    //gets information from back end. For now just gets user info, later will get books.
-    let books = await axios.get(`https://localhost:3001/books`, config);
-
-    console.log(books.data);
-    this.setState({serverResponse: books.data})
+    //Sending out a token to the front end to only get user info
+    let user = await axios.get(`${url}/test-login`, config);
+    console.log(user);
   }
 
   render() {
