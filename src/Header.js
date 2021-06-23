@@ -14,8 +14,12 @@ class Header extends React.Component {
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Navbar.Brand>My Favorite Books</Navbar.Brand>
         <Link to="/">Home</Link>
-        <Link to="/profile">Profile</Link>
-        {this.props.auth ? <LogoutButton /> : ''}
+        {this.props.auth ? 
+          <>
+          <Link to="/profile">Profile</Link> 
+          <LogoutButton />
+          </>
+          : ''}
       </Navbar>
     );
   }
