@@ -1,9 +1,16 @@
+.button {
+  margin: 2rem;
+}
+
 .carousel{
   background-color: black;
 }
 .carousel-control-prev, .carousel-control-next {
-  height: 30vh;
+  margin: 10rem 0;
+  height: 10vh;
 }
 .addBookContainer{
   background-color: lightcyan;
 }
+
+

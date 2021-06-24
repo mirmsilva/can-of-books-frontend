@@ -95,8 +95,9 @@ class MyFavoriteBooks extends React.Component {
     return(
       <>
     {
-      this.state.books ? this.state.books.map(book => 
-        <Carousel className="carousel" fade>
+      this.state.books ? 
+      <Carousel className="carousel" fade>
+      {this.state.books.map(book => 
     <Carousel.Item key={book._id}>
     <img
       className="d-block w-100"
@@ -108,8 +109,8 @@ class MyFavoriteBooks extends React.Component {
     </Carousel.Caption>
     <Button className="button" variant="info" onClick={()=>this.deleteBook(book._id)}>Delete Book</Button>
   </Carousel.Item>
-        </Carousel>
-    )
+    )}
+    </Carousel>
       : ''
     }
 <div className="addBookContainer">
