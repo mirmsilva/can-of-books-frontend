@@ -22,12 +22,13 @@ class MyFavoriteBooks extends React.Component {
     }
   }
 
+
   async componentDidMount() {
     // this is going to be the same, always, for making requests to the server including the token
     
     let config = await this.getConfig();
 
-    const url = process.env.REACT_APP_BACKEND_URL;
+  const url = process.env.REACT_APP_BACKEND_URL;
     //Sending out a token to the front end to only get user info
     let books = await axios.get(`${url}/books`, config);
 
@@ -54,11 +55,13 @@ class MyFavoriteBooks extends React.Component {
     }
     console.log(bookData);
 
+    const url = process.env.REACT_APP_BACKEND_URL;
+
     let config = await this.getConfig();
     // send data to backend
     // the second arg to .post is data that will be request body.
     // third arg is config that includes the header.
-    const returnedBook = await axios.post('http://localhost:3001/books', bookData, config);
+    const returnedBook = await axios.post(`${url}/books`, bookData, config);
     console.log(returnedBook);
 
     //creating a variable for the global component state
@@ -84,9 +87,12 @@ class MyFavoriteBooks extends React.Component {
   }
   //Delete Book request
   deleteBook=async(id)=>{
+
+    const url = process.env.REACT_APP_BACKEND_URL;
+
     let config = await this.getConfig();
     //let the back end know what book you would like to delete
-    let response = await axios.delete(`http://localhost:3001/books/${id}`, config);
+    let response = await axios.delete(`${url}/books/${id}`, config);
     console.log(response.data);
     //set the array with the new book list (minus the deleted book)
     let updatedArray= this.state.books.filter(book=>book._id !==id);
