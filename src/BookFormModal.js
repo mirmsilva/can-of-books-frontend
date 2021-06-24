@@ -13,7 +13,7 @@ class BookFormModal extends React.Component {
 
         <Modal.Body>
           <Form onSubmit={this.props.onSubmit}>
-            <Form.Group controlId="title">
+            <Form.Group controlId="name">
               <Form.Label>Title</Form.Label>
               <Form.Control type="text" placeholder="Title" />
             </Form.Group>

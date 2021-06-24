@@ -1,3 +1,10 @@
-.jumbotron{
-  margin-bottom: 0;
+.button{
+  margin: 2rem ;
+}
+.carousel{
+  background-color: black;
+}
+
+.addBookContainer{
+  background-color: lightcyan;
 }

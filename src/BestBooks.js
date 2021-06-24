@@ -44,7 +44,7 @@ class MyFavoriteBooks extends React.Component {
   onSubmit=async(e)=>{
     e.preventDefault();
     let bookData={
-      title: e.target.title.value,
+      name: e.target.name.value,
       description:e.target.description.value,
       status:e.target.status.value
     }
@@ -78,12 +78,23 @@ class MyFavoriteBooks extends React.Component {
       shouldShowModal:false
     })
   }
+  //Delete Book request
+  deleteBook=async(id)=>{
+    let config = await this.getConfig();
+    //let the back end know what book you would like to delete
+    let response = await axios.delete(`http://localhost:3001/books/${id}`, config);
+    console.log(response.data);
+    //set the array with the new book list (minus the deleted book)
+    let updatedArray= this.state.books.filter(book=>book._id !==id);
+    this.setState({books:updatedArray});
+
+  }
 
   render() {
     console.log(this.state.books);
     return(
       <>
-<Carousel fade>
+<Carousel className="carousel" fade>
     {
       this.state.books ? this.state.books.map(book => 
     <Carousel.Item key={book._id}>
@@ -95,14 +106,18 @@ class MyFavoriteBooks extends React.Component {
       <h3>Pages read: {book.status}</h3>
       <p>{book.description}</p>
     </Carousel.Caption>
+    <Button className="button" variant="info" onClick={()=>this.deleteBook(book._id)}>Delete Book</Button>
   </Carousel.Item>
+  
     )
       : ''
     }
 </Carousel>
-<Button onClick={this.showModal}>Add Book </Button>
-{this.state.shouldShowModal ? 
-<BookFormModal hideModal={this.hideModal} onSubmit={this.onSubmit} /> : ''}
+<div className="addBookContainer">
+  <Button className="button" onClick={this.showModal} variant="info">Add Book </Button>
+  {this.state.shouldShowModal ? 
+  <BookFormModal hideModal={this.hideModal} onSubmit={this.onSubmit} /> : ''}
+</div>
 </>
     )} 
 }
