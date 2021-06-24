@@ -126,9 +126,9 @@ class MyFavoriteBooks extends React.Component {
   <BookFormModal hideModal={this.hideModal} onSubmit={this.onSubmit} /> : ''}
 </div>
 
-      //<UpdateBookForm updateModal={this.state.updateModal} />
     </>
     )} 
 }
 
+      //<UpdateBookForm updateModal={this.state.updateModal} />
 export default withAuth0(MyFavoriteBooks);
