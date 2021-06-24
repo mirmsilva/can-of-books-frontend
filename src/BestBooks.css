@@ -1,13 +1,19 @@
-.button {
+.button-container {
+  display: flex;
   margin: 2rem;
+}
+
+.button {
+  width: 14vw;
+  z-index: 999;
 }
 
 .carousel{
   background-color: black;
 }
 .carousel-control-prev, .carousel-control-next {
-  margin: 10rem 0;
-  height: 10vh;
+  margin: 20rem 0;
+  height: 50px;
 }
 .addBookContainer{
   background-color: lightcyan;
