@@ -3,7 +3,6 @@ import Header from './Header';
 import IsLoadingAndError from './IsLoadingAndError';
 import Footer from './Footer';
 import { withAuth0 } from '@auth0/auth0-react';
-import axios from 'axios';
 
 import {
   BrowserRouter as Router,
@@ -11,7 +10,6 @@ import {
   Route
 } from "react-router-dom";
 
-import Login from './Login';
 import BestBooks from './BestBooks';
 import Profile from './Profile';
 
