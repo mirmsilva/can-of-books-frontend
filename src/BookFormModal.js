@@ -3,16 +3,6 @@ import {Modal, Form, Button} from 'react-bootstrap';
 
 class BookFormModal extends React.Component {
 
-  onSubmit=async(e)=>{
-    e.preventDefault();
-    let bookData={
-      title: e.target.title.value,
-      description:e.target.description.value,
-      status:e.target.status.value
-    }
-    console.log(bookData);
-  }
-
   render () {
 
     return (
@@ -22,7 +12,7 @@ class BookFormModal extends React.Component {
         </Modal.Header>
 
         <Modal.Body>
-          <Form onSubmit={this.onSubmit}>
+          <Form onSubmit={this.props.onSubmit}>
             <Form.Group controlId="title">
               <Form.Label>Title</Form.Label>
               <Form.Control type="text" placeholder="Title" />

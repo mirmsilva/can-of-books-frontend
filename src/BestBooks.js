@@ -21,33 +21,64 @@ class MyFavoriteBooks extends React.Component {
   async componentDidMount() {
     // this is going to be the same, always, for making requests to the server including the token
     
-    const { getIdTokenClaims } = this.props.auth0;
-    let tokenClaims = await getIdTokenClaims();
-    const jwt = tokenClaims.__raw;
+    let config = await this.getConfig();
 
-    //setting the authorization token to a header value.
-    const config = {
-      headers: {"Authorization" : `Bearer ${jwt}`}
-    };
-
-    let url = process.env.REACT_APP_BACKEND_URL;
+    const url = process.env.REACT_APP_BACKEND_URL;
     //Sending out a token to the front end to only get user info
     let books = await axios.get(`${url}/books`, config);
 
     this.setState({books: books.data});
-
   }
-showModal=()=>{
-  console.log('button pressed');
-  this.setState({
-    shouldShowModal:true
-  })
-}
-hideModal=()=>{
-  this.setState({
-    shouldShowModal:false
-  })
-}
+
+  getConfig = async() => {
+    const { getIdTokenClaims } = this.props.auth0;
+    let tokenClaims = await getIdTokenClaims();
+    const jwt = tokenClaims.__raw;
+
+    const config = {
+      headers: {"Authorization" : `Bearer ${jwt}`}
+    };
+    return config;
+  }
+
+  onSubmit=async(e)=>{
+    e.preventDefault();
+    let bookData={
+      title: e.target.title.value,
+      description:e.target.description.value,
+      status:e.target.status.value
+    }
+    console.log(bookData);
+
+    let config = await this.getConfig();
+    // send data to backend
+    // the second arg to .post is data that will be request body.
+    // third arg is config that includes the header.
+    const returnedBook = await axios.post('http://localhost:3001/books', bookData, config);
+    console.log(returnedBook);
+
+    //creating a variable for the global component state
+    let updatedArray = this.state.books;
+
+    //pushing the new book into the array
+    updatedArray.push(returnedBook.data);
+
+    //setting the state with the new book included.
+    this.setState({books: updatedArray});
+  }
+
+  showModal=()=>{
+    console.log('button pressed');
+    this.setState({
+      shouldShowModal:true
+    })
+  }
+  hideModal=()=>{
+    this.setState({
+      shouldShowModal:false
+    })
+  }
+
   render() {
     console.log(this.state.books);
     return(
@@ -71,7 +102,7 @@ hideModal=()=>{
 </Carousel>
 <Button onClick={this.showModal}>Add Book </Button>
 {this.state.shouldShowModal ? 
-<BookFormModal hideModal={this.hideModal} /> : ''}
+<BookFormModal hideModal={this.hideModal} onSubmit={this.onSubmit} /> : ''}
 </>
     )} 
 }
