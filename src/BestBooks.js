@@ -48,14 +48,12 @@ class MyFavoriteBooks extends React.Component {
       description:e.target.description.value,
       status:e.target.status.value
     }
-    console.log(bookData);
 
     let config = await this.getConfig();
     // send data to backend
     // the second arg to .post is data that will be request body.
     // third arg is config that includes the header.
     const returnedBook = await axios.post('http://localhost:3001/books', bookData, config);
-    console.log(returnedBook);
 
     //creating a variable for the global component state
     let updatedArray = this.state.books;
@@ -73,17 +71,20 @@ class MyFavoriteBooks extends React.Component {
       shouldShowModal:true
     })
   }
+
   hideModal=()=>{
     this.setState({
       shouldShowModal:false
     })
   }
+
   //Delete Book request
   deleteBook=async(id)=>{
     let config = await this.getConfig();
+    console.log(id);
     //let the back end know what book you would like to delete
     let response = await axios.delete(`http://localhost:3001/books/${id}`, config);
-    console.log(response.data);
+    console.log(response);
     //set the array with the new book list (minus the deleted book)
     let updatedArray= this.state.books.filter(book=>book._id !==id);
     this.setState({books:updatedArray});
@@ -106,7 +107,7 @@ class MyFavoriteBooks extends React.Component {
       <h3>Pages read: {book.status}</h3>
       <p>{book.description}</p>
     </Carousel.Caption>
-    <Button className="button" variant="info" onClick={()=>this.deleteBook(book._id)}>Delete Book</Button>
+    <Button className="button" variant="info" onClick={() => this.deleteBook(book._id)}>Delete Book</Button>
   </Carousel.Item>
   
     )
