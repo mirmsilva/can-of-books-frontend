@@ -13,7 +13,7 @@ class UpdateBookForm extends React.Component {
     </Modal.Header>
 
     <Modal.Body>
-          <Form onSubmit={() => this.props.sendUpdatedBook}>
+          <Form onSubmit={this.props.sendUpdatedBook}>
             <Form.Group controlId="name">
               <Form.Label>Title</Form.Label>
               <Form.Control type="text" defaultValue={this.props.book.name} />
@@ -28,7 +28,7 @@ class UpdateBookForm extends React.Component {
               <Form.Label>Status</Form.Label>
               <Form.Control type="number" defaultValue={this.props.book.status}/>
             </Form.Group>
-            <Button type ="submit" variant="success" >Update Book</Button>
+            <Button type ="submit" variant="success">Update Book</Button>
           </Form>
     </Modal.Body>
 

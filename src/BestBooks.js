@@ -83,15 +83,17 @@ class MyFavoriteBooks extends React.Component {
       shouldShowModal:false
     })
   }
-
+//this function shows the update book modal
+//this works
   showUpdateForm = (bookInfo) => {
     this.setState({
       shouldShowUpdateModal: true,
       bookToUpdate: bookInfo
     });
-    console.log(this.state.shouldShowUpdateModal);
+    console.log(bookInfo);
   }
-
+//this funtion hides update form
+//this works
   hideUpdateForm = () => {
     this.setState({
       shouldShowUpdateModal: false
@@ -111,19 +113,24 @@ class MyFavoriteBooks extends React.Component {
     this.setState({books:updatedArray});
   }
 
+
+  //update book request
   sendUpdatedBook=async(e)=> {
     e.preventDefault();
+    console.log(e.target)
     let config = await this.getConfig();
     let bookDataToUpdate = {
       name: e.target.name.value,
       description: e.target.description.value,
       status: e.target.status.value
     };
+    //send the response
     console.log(bookDataToUpdate);
     let response = await axios.put(`${url}/books/${this.state.bookToUpdate._id}`, bookDataToUpdate, config);
     console.log(response.data);
 
-    let updatedArray = this.state.catData;
+    
+    let updatedArray = this.state.books;
     updatedArray.splice(updatedArray.indexOf(this.state.bookToUpdate), 1, response.data);
 
     this.setState({
@@ -131,7 +138,7 @@ class MyFavoriteBooks extends React.Component {
       shouldShowUpdateModal: false,
       bookToUpdate: {}
     });
-
+    console.log(this.state.shouldShowUpdateModal)
   }
 
   render() {
