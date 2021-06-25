@@ -21,7 +21,7 @@ class App extends React.Component {
     console.log(isAuthenticated);
     return(
       <>
-        <Router>
+        <Router className="body">
           <IsLoadingAndError>
             <Header auth = {isAuthenticated}/>
             <Switch>
@@ -36,9 +36,9 @@ class App extends React.Component {
                 <Profile/>
               </Route>
             </Switch>
-            <Footer />
           </IsLoadingAndError>
         </Router>
+      <Footer />
       </>
     );
   }

@@ -1,10 +1,12 @@
 import React from 'react';
+import './Profile.css';
 
 import { withAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
 
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
+
 
 class Profile extends React.Component {
 
@@ -28,8 +30,8 @@ class Profile extends React.Component {
   render() {
     const {user} = this.props.auth0;
     return (
-      <>
-      <Card style={{width: '20rem'}}>
+      <div className="card-container">
+      <Card style={{width: '20rem'}} className="card">
         <Card.Img variant="top" src={user.picture}/>  
         <Card.Body>
           <Card.Title>User Profile</Card.Title>
@@ -40,7 +42,7 @@ class Profile extends React.Component {
           <ListGroup.Item>Nickname: {user.nickname}</ListGroup.Item>
         </ListGroup>
       </Card>
-      </>
+      </div>
     )
   }
 }

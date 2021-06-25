@@ -4,8 +4,9 @@
 }
 
 .button {
-  width: 14vw;
+  width: 10vw;
   z-index: 999;
+  margin: 1rem;
 }
 
 .carousel{
@@ -17,6 +18,7 @@
 }
 .addBookContainer{
   background-color: lightcyan;
+  height: 100vh;
 }
 
 

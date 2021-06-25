@@ -12,8 +12,8 @@ class Header extends React.Component {
   render() {
 
     return(
-      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-        <Navbar.Brand>My Favorite Books</Navbar.Brand>
+      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" className ="navbar-container">
+        <Navbar.Brand>Fireside Library</Navbar.Brand>
         <Link to="/">Home</Link>
         {this.props.auth ? 
           <>
