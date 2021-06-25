@@ -9,7 +9,9 @@ import { withAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
 
 import BookFormModal from './BookFormModal';
-//import UpdateBookForm from './UpdateBookForm';
+import UpdateBookForm from './UpdateBookForm';
+
+const url = process.env.REACT_APP_BACKEND_URL;
 
 class MyFavoriteBooks extends React.Component {
 
@@ -17,18 +19,15 @@ class MyFavoriteBooks extends React.Component {
     super(props);
     this.state = {
     books: [],
-    showModal:false,
-    updateModal: false
+    showModal: false,
+    shouldShowUpdateModal: false
     }
   }
 
-
   async componentDidMount() {
     // this is going to be the same, always, for making requests to the server including the token
-    
     let config = await this.getConfig();
 
-  const url = process.env.REACT_APP_BACKEND_URL;
     //Sending out a token to the front end to only get user info
     let books = await axios.get(`${url}/books`, config);
 
@@ -55,8 +54,6 @@ class MyFavoriteBooks extends React.Component {
     }
     console.log(bookData);
 
-    const url = process.env.REACT_APP_BACKEND_URL;
-
     let config = await this.getConfig();
     // send data to backend
     // the second arg to .post is data that will be request body.
@@ -80,28 +77,64 @@ class MyFavoriteBooks extends React.Component {
       shouldShowModal:true
     })
   }
+
   hideModal=()=>{
     this.setState({
       shouldShowModal:false
     })
   }
+
+  showUpdateForm = (bookInfo) => {
+    this.setState({
+      shouldShowUpdateModal: true,
+      bookToUpdate: bookInfo
+    });
+    console.log(this.state.shouldShowUpdateModal);
+  }
+
+  hideUpdateForm = () => {
+    this.setState({
+      shouldShowUpdateModal: false
+    })
+  }
+
   //Delete Book request
-  deleteBook=async(id)=>{
-
-    const url = process.env.REACT_APP_BACKEND_URL;
-
+  deleteBook=async(id)=>{ 
     let config = await this.getConfig();
+
     //let the back end know what book you would like to delete
     let response = await axios.delete(`${url}/books/${id}`, config);
     console.log(response.data);
+
     //set the array with the new book list (minus the deleted book)
     let updatedArray= this.state.books.filter(book=>book._id !==id);
     this.setState({books:updatedArray});
+  }
+
+  sendUpdatedBook=async(e)=> {
+    e.preventDefault();
+    let config = await this.getConfig();
+    let bookDataToUpdate = {
+      name: e.target.name.value,
+      description: e.target.description.value,
+      status: e.target.status.value
+    };
+    console.log(bookDataToUpdate);
+    let response = await axios.put(`${url}/books/${this.state.bookToUpdate._id}`, bookDataToUpdate, config);
+    console.log(response.data);
+
+    let updatedArray = this.state.catData;
+    updatedArray.splice(updatedArray.indexOf(this.state.bookToUpdate), 1, response.data);
+
+    this.setState({
+      books: updatedArray,
+      shouldShowUpdateModal: false,
+      bookToUpdate: {}
+    });
 
   }
 
   render() {
-    console.log(this.state.books);
     return(
       <>
     {
@@ -119,7 +152,10 @@ class MyFavoriteBooks extends React.Component {
     </Carousel.Caption>
     <div className="button-container">
     <Button className="button" variant="info" onClick={()=>this.deleteBook(book._id)}>Delete Book</Button>
-    <Button className="button" variant="warning" onClick={()=>this.updateBook(book._id)}>Update Book</Button>
+    <Button className="button" variant="warning" onClick={()=>this.showUpdateForm(book)}>Update Book</Button>
+
+    {this.state.shouldShowUpdateModal ? <UpdateBookForm book={this.state.bookToUpdate} sendUpdatedBook={this.sendUpdatedBook} hideUpdateForm={this.hideUpdateForm} shouldShowUpdateModal={this.state.shouldShowUpdateModal}/> : ''}
+
     </div>
   </Carousel.Item>
     )}
