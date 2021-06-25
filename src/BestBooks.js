@@ -158,7 +158,7 @@ class MyFavoriteBooks extends React.Component {
       <p>{book.description}</p>
     </Carousel.Caption>
     <div className="button-container">
-    <Button className="button" variant="info" onClick={()=>this.deleteBook(book._id)}>Delete Book</Button>
+    <Button className="button" variant="danger" onClick={()=>this.deleteBook(book._id)}>Delete Book</Button>
     <Button className="button" variant="warning" onClick={()=>this.showUpdateForm(book)}>Update Book</Button>
 
     {this.state.shouldShowUpdateModal ? <UpdateBookForm book={this.state.bookToUpdate} sendUpdatedBook={this.sendUpdatedBook} hideUpdateForm={this.hideUpdateForm} shouldShowUpdateModal={this.state.shouldShowUpdateModal}/> : ''}

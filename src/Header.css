@@ -5,3 +5,8 @@ a{
 a:hover{
   color:darkgrey;
 }
+
+.navbar-container {
+  display: flex;
+  justify-content: space-evenly;
+}
